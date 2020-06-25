@@ -2,8 +2,9 @@ package framework;
 
 public class Jeu {
     private int nbTours;
+    private Strategie strategieScore;
 
-    public void calculerScoereTour()
+    public void calculerScoreTour()
     {
 
     }
