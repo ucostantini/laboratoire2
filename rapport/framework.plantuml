@@ -1,0 +1,150 @@
+@startuml
+skinparam linetype ortho
+title __Diagramme de Classes UML__\n
+
+    namespace framework {
+        interface framework.Collection {
+            + {abstract} creerIterateur() : Iterator
+        }
+      }
+
+  namespace framework {
+    class framework.CollectionDes {
+        + ajouterDe(de : De)
+        + creerIterateur() : IterateurDes
+    }
+  }
+
+framework.CollectionDes ..|> framework.Collection
+  framework.CollectionDes o-- framework.De : des
+  
+
+  namespace framework {
+    class framework.CollectionJoueurs {
+        + ajouterJoueur(joueur : Joueur)
+        + creerIterateur() : IterateurJoueurs
+    }
+  }
+
+framework.CollectionJoueurs .right.|> framework.Collection
+  framework.CollectionJoueurs o-- framework.Joueur : joueurs
+
+  namespace framework {
+    class framework.De {
+        - nbFaces : int
+        + De(nbFaces : int)
+        + lancer() : int
+        + compareTo(de : De) : int
+    }
+  }
+  
+
+  namespace framework {
+    class framework.IterateurDes {
+        + IterateurDes(collectionDes : CollectionDes)
+        + hasNext() : boolean
+        + next() : De
+    }
+  }
+
+  framework.IterateurDes o-- framework.CollectionDes : collectionDes
+
+  namespace framework {
+    class framework.IterateurJoueurs {
+        + IterateurJoueurs(collectionJoueurs : CollectionJoueurs)
+        + hasNext() : boolean
+        + next() : Joueur
+    }
+  }
+
+  framework.IterateurJoueurs o-- framework.CollectionJoueurs : collectionJoueurs
+  
+
+  namespace framework {
+    abstract class framework.Jeu {
+        # nbToursRestant : int
+        # Jeu(nbToursRestant : int)
+        + initialiserJeu()
+        + {abstract} initialiserJoueurs()
+        + {abstract} initialiserDes()
+        + calculerLeVainqueur()
+        + calculerScoreTour()
+    }
+  }
+
+  framework.Jeu o-right- framework.Strategie : strategieScore
+  framework.Jeu o-- framework.IterateurJoueurs : iterateurJoueurs
+  framework.Jeu o-- framework.IterateurDes : iterateurDes
+  
+
+  namespace framework {
+    class framework.Joueur {
+        - nom : String
+        - score : int
+        + Joueur(nom : String)
+        + ajouterPoints(points : int)
+        + enleverPoints(points : int)
+        + compareTo(joueur : Joueur) : int
+    }
+  }
+  
+
+  namespace framework {
+    interface framework.Strategie {
+        {abstract} + calculerLeVainqueur(jeu : Jeu)
+        {abstract} + calculerScoreTour(jeu : Jeu)
+    }
+  }
+
+  namespace framework {
+      abstract class framework.Fabrique {
+          {abstract} + getDe() : De
+          {abstract} + getJoueur() : Joueur
+          {abstract} + getJeu() : Jeu
+      }
+    }
+  
+
+  framework.De ..|> java.lang.Comparable
+  framework.IterateurDes .up.|> java.util.Iterator
+  framework.IterateurJoueurs .left.|> java.util.Iterator
+  framework.Joueur ..|> java.lang.Comparable
+
+  namespace buncoPlus {
+    class buncoPlus.JeuBuncoPlus {
+        + JeuBuncoPlus(nbToursRestant : int)
+        + initialiserJoueurs()
+        + initialiserDes()
+    }
+  }
+
+  namespace buncoPlus {
+      class buncoPlus.StrategieBuncoPlus {
+          + calculerLeVainqueur(jeu : Jeu)
+          + calculerScoreTour(jeu : Jeu)
+      }
+  }
+
+    namespace buncoPlus {
+        class buncoPlus.FabriqueBuncoPlus {
+            + getDe() : De
+            + getJoueur() : Joueur
+            + getJeu() : Jeu
+        }
+      }
+
+  buncoPlus.JeuBuncoPlus --|> framework.Jeu
+  buncoPlus.StrategieBuncoPlus ..|> framework.Strategie
+  buncoPlus.FabriqueBuncoPlus --|> framework.Fabrique
+
+@enduml
+
+
+Association :
+Jeu peu exister sans la strategie
+
+Aggregation :
+Jeu ne peut pas exister sans la strategie
+
+
+
