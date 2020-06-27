@@ -10,6 +10,7 @@ title __Diagramme de Classes UML__\n
 
   namespace framework {
     class framework.CollectionDes {
+        + CollectionDes(nbDes : int)
         + ajouterDe(de : De)
         + creerIterateur() : IterateurDes
     }
@@ -21,6 +22,7 @@ framework.CollectionDes ..|> framework.Collection
 
   namespace framework {
     class framework.CollectionJoueurs {
+        + CollectionJoueurs(nbJoueurs : int)
         + ajouterJoueur(joueur : Joueur)
         + creerIterateur() : IterateurJoueurs
     }
@@ -32,6 +34,7 @@ framework.CollectionJoueurs .right.|> framework.Collection
   namespace framework {
     class framework.De {
         - nbFaces : int
+        - faceActuelle : int
         + De(nbFaces : int)
         + lancer() : int
         + compareTo(de : De) : int
@@ -62,8 +65,8 @@ framework.CollectionJoueurs .right.|> framework.Collection
 
   namespace framework {
     abstract class framework.Jeu {
-        # nbToursRestant : int
-        # Jeu(nbToursRestant : int)
+        # nbTours : int
+        # Jeu(nbTours : int)
         + initialiserJeu()
         + {abstract} initialiserJoueurs()
         + {abstract} initialiserDes()
@@ -97,7 +100,7 @@ framework.CollectionJoueurs .right.|> framework.Collection
   }
 
   namespace framework {
-      abstract class framework.Fabrique {
+      interface framework.Fabrique {
           {abstract} + getDe() : De
           {abstract} + getJoueur() : Joueur
           {abstract} + getJeu() : Jeu
@@ -112,7 +115,7 @@ framework.CollectionJoueurs .right.|> framework.Collection
 
   namespace buncoPlus {
     class buncoPlus.JeuBuncoPlus {
-        + JeuBuncoPlus(nbToursRestant : int)
+        + JeuBuncoPlus(nbTours : int)
         + initialiserJoueurs()
         + initialiserDes()
     }

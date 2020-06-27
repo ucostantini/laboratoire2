@@ -1,9 +1,30 @@
 package framework;
 
-public class De implements Comparable {
-    @Override
-    public int compareTo(Object o)
+import java.util.Random;
+
+public class De implements Comparable<De> {
+    private int nbFaces;
+    private int faceActuelle;
+
+    public De(int nbFaces)
     {
-        return 0;
+        this.nbFaces = nbFaces;
+    }
+
+    public int lancer()
+    {
+        this.faceActuelle = 1 + new Random().nextInt(this.nbFaces);
+        return this.faceActuelle;
+    }
+
+    public int getFaceActuelle()
+    {
+        return faceActuelle;
+    }
+
+    @Override
+    public int compareTo(De de)
+    {
+        return Integer.compare(this.faceActuelle, de.getFaceActuelle());
     }
 }
