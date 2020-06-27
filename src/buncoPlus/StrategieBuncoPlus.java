@@ -103,8 +103,7 @@ public class StrategieBuncoPlus implements Strategie {
                     {
                         scoreManche++;
                         scoreTotal++;
-                    }
-                    else
+                    } else
                         estBunco = false;
 
                 }
