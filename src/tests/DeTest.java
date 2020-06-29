@@ -24,7 +24,7 @@ public class DeTest {
     {
         de1.setFaceActuelle(4);
         de2.setFaceActuelle(5);
-        assertTrue(de1.compareTo(de2) == 1);
+        assertTrue(de1.compareTo(de2) == -1);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class DeTest {
     {
         de1.setFaceActuelle(4);
         de2.setFaceActuelle(5);
-        assertEquals(-1, de2.compareTo(de1));
+        assertEquals(1, de2.compareTo(de1));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class DeTest {
         assertTrue(de1.compareTo(de1) == 0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void deNullTest()
     {
         de1.setFaceActuelle(4);
