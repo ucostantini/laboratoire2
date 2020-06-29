@@ -22,6 +22,11 @@ public class De implements Comparable<De> {
         return faceActuelle;
     }
 
+    public void setFaceActuelle(int faceActuelle)
+    {
+        this.faceActuelle = faceActuelle;
+    }
+
     @Override
     public int compareTo(De de)
     {
