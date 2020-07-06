@@ -14,15 +14,17 @@ public class StrategieBuncoPlus implements Strategie {
         Joueur vainqueurCourant = it.next();
         System.out.println();
         System.out.println();
-        System.out.println("***************************");
-        System.out.println("score " + vainqueurCourant.getNom() + " : " + vainqueurCourant.getScore());
+        System.out.println();
+        System.out.println("********************************** SCORE FINAL ********************************************");
+        System.out.println("Score de " + vainqueurCourant.getNom() + " : " + vainqueurCourant.getScore());
+
 
         List<Joueur> vainqueurs = new ArrayList<>();
 
         while (it.hasNext())
         {
             Joueur joueurSuivant = it.next();
-            System.out.println("score " + joueurSuivant.getNom() + " : " + joueurSuivant.getScore());
+            System.out.println("Score de " + joueurSuivant.getNom() + " : " + joueurSuivant.getScore());
 
             if (vainqueurCourant.compareTo(joueurSuivant) < 0)
             {
@@ -34,12 +36,14 @@ public class StrategieBuncoPlus implements Strategie {
         }
         vainqueurs.add(vainqueurCourant);
 
+        System.out.println();
+
         if (vainqueurs.size() == 1)
-            System.out.println("le joueur " + vainqueurCourant.getNom() + " a gagne !");
+            System.out.println(vainqueurCourant.getNom() + " a gagne !");
         else
         {
             for (Joueur joueur : vainqueurs)
-                System.out.println("le joueur " + joueur.getNom() + " a gagne !");
+                System.out.println(joueur.getNom() + " a gagne !");
 
         }
         return vainqueurs;
@@ -50,22 +54,22 @@ public class StrategieBuncoPlus implements Strategie {
     {
         IterateurJoueurs iterateurJoueurs = jeu.getIterateurJoueurs();
         iterateurJoueurs.reset();
-        System.out.println("***********************");
-        System.out.println("Tour " + tourCourant + ":");
         System.out.println();
+        System.out.println("******************************* TOUR " + tourCourant + " ***************************************");
 
         while (iterateurJoueurs.hasNext())
         {
             Joueur joueur = iterateurJoueurs.next();
 
-            System.out.println(joueur.getNom() + " joue !");
-            System.out.println();
+            System.out.println("-----------");
+            System.out.println(joueur.getNom().toUpperCase() + " joue !");
+            System.out.println("-----------");
             System.out.println();
 
-            int scoreTotal = 0;
+            int scoreManche = 0;
             boolean estBunco = true;
             boolean differents;
-            int scoreManche;
+            int scoreLancer;
 
             do
             {
@@ -74,7 +78,7 @@ public class StrategieBuncoPlus implements Strategie {
                 iterateurDes.reset();
                 differents = false;
 
-                scoreManche = 0;
+                scoreLancer = 0;
 
 
                 while (iterateurDes.hasNext())
@@ -97,38 +101,39 @@ public class StrategieBuncoPlus implements Strategie {
                         deResultat = actuel.lancer();
                     }
 
-                    System.out.println("Le lancer est : " + deResultat);
+                    System.out.println("Face obtenue : " + deResultat);
 
                     if (deResultat == tourCourant)
                     {
+                        scoreLancer++;
                         scoreManche++;
-                        scoreTotal++;
                     } else
                         estBunco = false;
 
                 }
 
-                System.out.println("scoreManche : " + scoreManche);
+                System.out.println("score du lancer : " + scoreLancer);
                 System.out.println();
 
 
-            } while (scoreManche != 0 && !estBunco);
+            } while (scoreLancer != 0 && !estBunco);
 
 
             if (estBunco)
             {
-                scoreTotal += 18;
+                scoreManche += 18;
                 System.out.println("C est un Bunco !");
 
-            } else if (!estBunco && !differents)
+            } else if (!differents)
             {
-                scoreTotal += 5;
+                scoreManche += 5;
                 System.out.println("Les trois des sont identiques !");
             }
 
-            joueur.ajouterPoints(scoreTotal);
+            joueur.ajouterPoints(scoreManche);
 
-            System.out.println("Le score de " + joueur.getNom() + " est maintenant de : " + joueur.getScore());
+            System.out.println("Le score du tour " + tourCourant + " de " + joueur.getNom() + " est : " + scoreManche);
+            System.out.println();
         }
     }
 
