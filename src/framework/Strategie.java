@@ -1,7 +1,9 @@
 package framework;
 
-public interface Strategie {
-    void calculerLeVainqueur(Jeu jeu);
+import java.util.List;
 
-    void calculerScoreTour(Jeu jeu, int tourCourant);
+public interface Strategie {
+    public List<Joueur> calculerLeVainqueur(Jeu jeu);
+
+    public void calculerScoreTour(Jeu jeu, int tourCourant);
 }

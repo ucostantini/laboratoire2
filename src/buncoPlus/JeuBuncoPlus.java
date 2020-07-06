@@ -2,21 +2,21 @@ package buncoPlus;
 
 import framework.CollectionDes;
 import framework.CollectionJoueurs;
-import framework.Fabrique;
 import framework.Jeu;
 
 import java.util.Scanner;
 
 public class JeuBuncoPlus extends Jeu {
-    private Fabrique fabrique;
+
+    private static final int NBDES = 3;
+    private static final int NBFACES_DES = 6;
 
     public JeuBuncoPlus(int nbTours)
     {
         super(nbTours, new StrategieBuncoPlus());
-        this.fabrique = new FabriqueBuncoPlus();
     }
 
-    public void initialiserJoueurs()
+    public CollectionJoueurs initialiserJoueurs()
     {
         Scanner sc = new Scanner(System.in);
         System.out.println("Salut ! Quel est le nombre de joueurs pour cette partie ?");
@@ -27,19 +27,21 @@ public class JeuBuncoPlus extends Jeu {
         for (int i = 1; i <= nbJoueurs; i++)
         {
             System.out.println("Quel est le nom du joueur " + i + " ?");
-            collectionJoueurs.ajouterJoueur(this.fabrique.getJoueur(sc.next()));
+            collectionJoueurs.ajouterJoueur(new FabriqueBuncoPlus().getJoueur(sc.next()));
         }
 
         super.setIterateurJoueurs(collectionJoueurs.creerIterateur());
+        return collectionJoueurs;
     }
 
-    public void initialiserDes()
+    public CollectionDes initialiserDes()
     {
-        CollectionDes collectionDes = new CollectionDes(3);
+        CollectionDes collectionDes = new CollectionDes(JeuBuncoPlus.NBDES);
 
-        for (int i = 0; i < 3; i++)
-            collectionDes.ajouterDe(this.fabrique.getDe(6));
+        for (int i = 0; i < JeuBuncoPlus.NBDES; i++)
+            collectionDes.ajouterDe(new FabriqueBuncoPlus().getDe(JeuBuncoPlus.NBFACES_DES));
 
         super.setIterateurDes(collectionDes.creerIterateur());
+        return collectionDes;
     }
 }
