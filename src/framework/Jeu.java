@@ -18,9 +18,9 @@ public abstract class Jeu {
         this.initialiserDes();
     }
 
-    protected abstract void initialiserJoueurs();
+    protected abstract CollectionJoueurs initialiserJoueurs();
 
-    protected abstract void initialiserDes();
+    protected abstract CollectionDes initialiserDes();
 
     public void jouer()
     {
@@ -63,5 +63,10 @@ public abstract class Jeu {
     public void setIterateurJoueurs(IterateurJoueurs iterateurJoueurs)
     {
         this.iterateurJoueurs = iterateurJoueurs;
+    }
+
+    public Strategie getStrategieScore()
+    {
+        return strategieScore;
     }
 }

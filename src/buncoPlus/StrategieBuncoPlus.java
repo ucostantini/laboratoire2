@@ -7,7 +7,7 @@ import java.util.List;
 
 public class StrategieBuncoPlus implements Strategie {
     @Override
-    public void calculerLeVainqueur(Jeu jeu)
+    public List<Joueur> calculerLeVainqueur(Jeu jeu)
     {
         IterateurJoueurs it = jeu.getIterateurJoueurs();
         it.reset();
@@ -42,7 +42,7 @@ public class StrategieBuncoPlus implements Strategie {
                 System.out.println("le joueur " + joueur.getNom() + " a gagne !");
 
         }
-
+        return vainqueurs;
     }
 
     @Override

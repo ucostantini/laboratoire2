@@ -13,7 +13,7 @@ title __Diagramme de Classes UML__\n
   namespace framework {
     class framework.CollectionDes {
         + CollectionDes(nbDes : int)
-        + ajouterDe()
+        + ajouterDe(de : De)
         + creerIterateur() : IterateurDes
         + getDes() : De[]
     }
@@ -23,7 +23,7 @@ title __Diagramme de Classes UML__\n
   namespace framework {
     class framework.CollectionJoueurs {
         + CollectionJoueurs(nbJoueurs : int)
-        + ajouterJoueur(Joueur : Joueur)
+        + ajouterJoueur(joueur : Joueur)
         + creerIterateur() : IterateurJoueurs
         + getJoueurs() : Joueur[]
     }

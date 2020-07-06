@@ -35,4 +35,9 @@ public class Joueur implements Comparable<Joueur> {
     {
         return Integer.compare(this.getScore(), joueur.getScore());
     }
+
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
 }
