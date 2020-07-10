@@ -5,6 +5,9 @@ import framework.Fabrique;
 import framework.Jeu;
 import framework.Joueur;
 
+/**
+ * Classe concrete d une Fabrique pour un jeu BuncoPlus
+ */
 public class FabriqueBuncoPlus implements Fabrique {
     @Override
     public De getDe(int nbFaces)

@@ -6,16 +6,25 @@ import framework.Jeu;
 
 import java.util.Scanner;
 
+/**
+ * Classe concrete du jeu pour initialiser un jeu BuncoPlus
+ */
 public class JeuBuncoPlus extends Jeu {
 
     private static final int NBDES = 3;
     private static final int NBFACES_DES = 6;
 
+    /**
+     * Constructeur d un jeu BuncoPlus, utilise une strategie BuncoPlus pour fonctionner
+     *
+     * @param nbTours
+     */
     public JeuBuncoPlus(int nbTours)
     {
         super(nbTours, new StrategieBuncoPlus());
     }
 
+    @Override
     public CollectionJoueurs initialiserJoueurs()
     {
         Scanner sc = new Scanner(System.in);
@@ -34,6 +43,7 @@ public class JeuBuncoPlus extends Jeu {
         return collectionJoueurs;
     }
 
+    @Override
     public CollectionDes initialiserDes()
     {
         CollectionDes collectionDes = new CollectionDes(JeuBuncoPlus.NBDES);

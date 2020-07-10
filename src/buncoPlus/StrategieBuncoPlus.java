@@ -5,6 +5,9 @@ import framework.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe concrete de la strategie d un jeu, pour le jeu Bunco Plus
+ */
 public class StrategieBuncoPlus implements Strategie {
     @Override
     public List<Joueur> calculerLeVainqueur(Jeu jeu)
@@ -18,7 +21,8 @@ public class StrategieBuncoPlus implements Strategie {
         System.out.println("********************************** SCORE FINAL ********************************************");
         System.out.println("Score de " + vainqueurCourant.getNom() + " : " + vainqueurCourant.getScore());
 
-
+        //Liste qui contient tous les vainqueurs qui ont le meme score
+        //Cette liste est reinitialisee de qu un joueur ayant un score plus eleve est trouve
         List<Joueur> vainqueurs = new ArrayList<>();
 
         while (it.hasNext())
@@ -26,6 +30,11 @@ public class StrategieBuncoPlus implements Strategie {
             Joueur joueurSuivant = it.next();
             System.out.println("Score de " + joueurSuivant.getNom() + " : " + joueurSuivant.getScore());
 
+            /*
+            Si le joueur a un score plus eleve,
+              on remplace le vainqueur et on efface la liste des vainqueurs (qui ont le meme score)
+            Sinon si les 2 joueurs ont le meme score, on ajoute le joueur a la liste des vainqueurs
+            */
             if (vainqueurCourant.compareTo(joueurSuivant) < 0)
             {
                 vainqueurCourant = joueurSuivant;
@@ -57,6 +66,7 @@ public class StrategieBuncoPlus implements Strategie {
         System.out.println();
         System.out.println("******************************* TOUR " + tourCourant + " ***************************************");
 
+        //On parcourt les joueurs
         while (iterateurJoueurs.hasNext())
         {
             Joueur joueur = iterateurJoueurs.next();
@@ -66,25 +76,32 @@ public class StrategieBuncoPlus implements Strategie {
             System.out.println("-----------");
             System.out.println();
 
+            //Le score d une manche (un tour)
             int scoreManche = 0;
             boolean estBunco = true;
+
+            //Si tous les des ont un resultat different
             boolean differents;
+
+            //Score du de lance
             int scoreLancer;
 
+            //Tant que le score obtenu avec le lancer des 3 des n est pas zero
+            //Ou qu on obtient pas de bunco, on boucle et on lance les des a repetition
             do
             {
                 IterateurDes iterateurDes = jeu.getIterateurDes();
                 De actuel = null;
                 iterateurDes.reset();
                 differents = false;
-
                 scoreLancer = 0;
 
-
+                //On lance les 3 des
                 while (iterateurDes.hasNext())
                 {
 
                     int deResultat;
+                    //Ce bloc sert a determiner si tous les des obtenus sont differents, tout en gerant l iterateur
                     if (actuel != null)
                     {
                         De suivant = iterateurDes.next();
