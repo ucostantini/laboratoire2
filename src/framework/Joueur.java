@@ -4,7 +4,7 @@ package framework;
  * Classe responsable du Joueur
  */
 public class Joueur implements Comparable<Joueur> {
-    private String nom;
+    private final String nom;
     private int score;
 
     /**

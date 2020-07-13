@@ -15,7 +15,7 @@ public class FabriqueBuncoPlusTest {
     private FabriqueBuncoPlus fb;
 
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
         this.fb = new FabriqueBuncoPlus();
     }

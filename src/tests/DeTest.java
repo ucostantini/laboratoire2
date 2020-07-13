@@ -24,7 +24,7 @@ public class DeTest {
     {
         de1.setFaceActuelle(4);
         de2.setFaceActuelle(5);
-        assertTrue(de1.compareTo(de2) == -1);
+        assertEquals(de1.compareTo(de2), -1);
     }
 
     @Test
@@ -39,7 +39,8 @@ public class DeTest {
     public void memeDeTest()
     {
         de1.setFaceActuelle(4);
-        assertTrue(de1.compareTo(de1) == 0);
+        de2.setFaceActuelle(4);
+        assertEquals(0, de1.compareTo(de2));
     }
 
     @Test(expected = NullPointerException.class)
@@ -47,5 +48,19 @@ public class DeTest {
     {
         de1.setFaceActuelle(4);
         de1.compareTo(null);
+    }
+
+    @Test
+    public void lancer()
+    {
+        de1.lancer();
+        assertTrue(de1.getFaceActuelle() >= 1 && de1.getFaceActuelle() <= 6);
+    }
+
+    @Test
+    public void getFaceActuelle()
+    {
+        de1.setFaceActuelle(4);
+        assertEquals(4, de1.getFaceActuelle());
     }
 }

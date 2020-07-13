@@ -6,7 +6,7 @@ import java.util.Iterator;
  * Iterateur sur une collection de joueurs
  */
 public class IterateurJoueurs implements Iterator<Joueur> {
-    private CollectionJoueurs collectionJoueurs;
+    private final CollectionJoueurs collectionJoueurs;
     private int position;
 
     /**
@@ -53,5 +53,15 @@ public class IterateurJoueurs implements Iterator<Joueur> {
     public void reset()
     {
         this.position = 0;
+    }
+
+    /**
+     * Getter du nombre de joueurs contenus dans la collection.
+     *
+     * @return le nombre de joueurs dans la collection.
+     */
+    public int getNbJoueurs()
+    {
+        return collectionJoueurs.getJoueurs().length;
     }
 }

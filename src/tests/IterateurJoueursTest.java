@@ -28,6 +28,7 @@ public class IterateurJoueursTest {
         cJ.ajouterJoueur(joueur1);
         assertTrue(iterateurJoueurs.hasNext());
     }
+
     @Test
     public void hasNextFaux(){
 
@@ -35,6 +36,7 @@ public class IterateurJoueursTest {
         iterateurJoueurs = new IterateurJoueurs(cJ);
         assertFalse(iterateurJoueurs.hasNext());
     }
+
     @Test
     public void nextVrai(){
         cJ = new CollectionJoueurs(1);
@@ -44,6 +46,7 @@ public class IterateurJoueursTest {
         assertEquals("joueur1", joueur.getNom());
 
     }
+
     @Test
     public void nextFaux(){
         cJ = new CollectionJoueurs(0);
@@ -51,6 +54,7 @@ public class IterateurJoueursTest {
         assertNull(iterateurJoueurs.next());
 
     }
+
     @Test
     public void reset(){
 
@@ -65,6 +69,14 @@ public class IterateurJoueursTest {
         iterateurJoueurs.reset();
 
         assertEquals("joueur1", iterateurJoueurs.next().getNom());
+    }
+
+    @Test
+    public void getNbDes()
+    {
+        cJ = new CollectionJoueurs(8);
+        iterateurJoueurs = new IterateurJoueurs(cJ);
+        assertEquals(8, iterateurJoueurs.getNbJoueurs());
     }
 
 }

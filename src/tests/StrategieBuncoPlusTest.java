@@ -2,9 +2,7 @@ package tests;
 
 import buncoPlus.JeuBuncoPlus;
 import buncoPlus.StrategieBuncoPlus;
-import framework.CollectionJoueurs;
-import framework.Jeu;
-import framework.Joueur;
+import framework.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,10 +16,16 @@ public class StrategieBuncoPlusTest {
     private CollectionJoueurs cj;
     private Jeu j;
 
+
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
-        this.st = new StrategieBuncoPlus();
+        st = new StrategieBuncoPlus();
+    }
+
+
+    public void setUpVainqueur() throws Exception
+    {
         this.cj = new CollectionJoueurs(3);
 
         this.cj.ajouterJoueur(new Joueur("Bob"));
@@ -32,9 +36,24 @@ public class StrategieBuncoPlusTest {
         this.j.setIterateurJoueurs(cj.creerIterateur());
     }
 
-    @Test
-    public void calculerLeVainqueurUnVainqueur()
+    public void setUpScoreTour(int tours, int nbDes, int nbFace)
     {
+        CollectionDes cd = new CollectionDes(nbDes);
+        cj = new CollectionJoueurs(1);
+        cj.ajouterJoueur(new Joueur("Abder"));
+        for (int i = 0; i < nbDes; i++)
+        {
+            cd.ajouterDe(new De(nbFace));
+        }
+        j = new JeuBuncoPlus(tours);
+        j.setIterateurJoueurs(cj.creerIterateur());
+        j.setIterateurDes(cd.creerIterateur());
+    }
+
+    @Test
+    public void calculerLeVainqueurUnVainqueur() throws Exception
+    {
+        setUpVainqueur();
         this.cj.getJoueurs()[0].setScore(1);
         this.cj.getJoueurs()[1].setScore(2);
         this.cj.getJoueurs()[2].setScore(3);
@@ -46,8 +65,9 @@ public class StrategieBuncoPlusTest {
     }
 
     @Test
-    public void calculerLeVainqueurDeuxVainqueurs()
+    public void calculerLeVainqueurDeuxVainqueurs() throws Exception
     {
+        setUpVainqueur();
         this.cj.getJoueurs()[0].setScore(4);
         this.cj.getJoueurs()[1].setScore(4);
         this.cj.getJoueurs()[2].setScore(3);
@@ -56,4 +76,38 @@ public class StrategieBuncoPlusTest {
         assertEquals("Alice", vainqueurs.get(0).getNom());
         assertEquals("Bob", vainqueurs.get(1).getNom());
     }
+
+    @Test
+    public void calculerScoreTour0Point()
+    {
+        setUpScoreTour(1, 1, 1);
+        int score = st.calculerScoreTour(j, 2); // tour 2 avec un de de face 1
+        assertEquals(0, score);
+    }
+
+    @Test
+    public void calculerScoreTour1Point()
+    {
+        setUpScoreTour(1, 1, 1);
+        int score = st.calculerScoreTour(j, 1);  // tour 1 avec un de de face 1
+        assertEquals(1, score);
+    }
+
+    @Test
+    public void calculerScoreTour5Point()
+    {
+        setUpScoreTour(1, 3, 1);
+        int score = st.calculerScoreTour(j, 2); // tour 2 avec trois des de face 1
+        assertEquals(5, score);
+    }
+
+    @Test
+    public void calculerScoreTourBunco()
+    {
+        setUpScoreTour(1, 3, 1);
+        int score = st.calculerScoreTour(j, 1); // tour 1 avec trois des de face 1
+        assertEquals(21, score);
+    }
+
+
 }

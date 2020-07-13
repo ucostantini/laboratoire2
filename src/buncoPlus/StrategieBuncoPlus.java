@@ -9,6 +9,8 @@ import java.util.List;
  * Classe concrete de la strategie d un jeu, pour le jeu Bunco Plus
  */
 public class StrategieBuncoPlus implements Strategie {
+
+
     @Override
     public List<Joueur> calculerLeVainqueur(Jeu jeu)
     {
@@ -59,14 +61,14 @@ public class StrategieBuncoPlus implements Strategie {
     }
 
     @Override
-    public void calculerScoreTour(Jeu jeu, int tourCourant)
+    public int calculerScoreTour(Jeu jeu, int tourCourant)
     {
         IterateurJoueurs iterateurJoueurs = jeu.getIterateurJoueurs();
         iterateurJoueurs.reset();
         System.out.println();
         System.out.println("******************************* TOUR " + tourCourant + " ***************************************");
+        int score = 0;
 
-        //On parcourt les joueurs
         while (iterateurJoueurs.hasNext())
         {
             Joueur joueur = iterateurJoueurs.next();
@@ -76,14 +78,10 @@ public class StrategieBuncoPlus implements Strategie {
             System.out.println("-----------");
             System.out.println();
 
-            //Le score d une manche (un tour)
-            int scoreManche = 0;
+
+            int scoreTotal = 0;
             boolean estBunco = true;
-
-            //Si tous les des ont un resultat different
-            boolean differents;
-
-            //Score du de lance
+            boolean differents = true;
             int scoreLancer;
 
             //Tant que le score obtenu avec le lancer des 3 des n est pas zero
@@ -93,22 +91,25 @@ public class StrategieBuncoPlus implements Strategie {
                 IterateurDes iterateurDes = jeu.getIterateurDes();
                 De actuel = null;
                 iterateurDes.reset();
-                differents = false;
                 scoreLancer = 0;
 
-                //On lance les 3 des
+
                 while (iterateurDes.hasNext())
                 {
 
                     int deResultat;
-                    //Ce bloc sert a determiner si tous les des obtenus sont differents, tout en gerant l iterateur
                     if (actuel != null)
                     {
                         De suivant = iterateurDes.next();
                         deResultat = suivant.lancer();
-
+                        //Ce bloc sert a determiner si tous les des obtenus sont differents, tout en gerant l iterateur
                         if (actuel.compareTo(suivant) != 0)
+                        {
                             differents = true;
+                        } else if (actuel.compareTo(suivant) == 0 && jeu.getIterateurDes().getNbDes() == 3)
+                        {
+                            differents = false;
+                        }
 
                         actuel = suivant;
                     } else
@@ -118,40 +119,40 @@ public class StrategieBuncoPlus implements Strategie {
                         deResultat = actuel.lancer();
                     }
 
-                    System.out.println("Face obtenue : " + deResultat);
+                    System.out.println("Le lancer est : " + deResultat);
 
                     if (deResultat == tourCourant)
                     {
                         scoreLancer++;
-                        scoreManche++;
+                        scoreTotal++;
                     } else
                         estBunco = false;
 
                 }
 
-                System.out.println("score du lancer : " + scoreLancer);
+                System.out.println("scoreLancer : " + scoreLancer);
                 System.out.println();
 
 
             } while (scoreLancer != 0 && !estBunco);
 
 
-            if (estBunco)
+            if (estBunco && jeu.getIterateurDes().getNbDes() == 3)
             {
-                scoreManche += 18;
+                scoreTotal += 18;
                 System.out.println("C est un Bunco !");
 
             } else if (!differents)
             {
-                scoreManche += 5;
+                scoreTotal += 5;
                 System.out.println("Les trois des sont identiques !");
             }
 
-            joueur.ajouterPoints(scoreManche);
-
-            System.out.println("Le score du tour " + tourCourant + " de " + joueur.getNom() + " est : " + scoreManche);
-            System.out.println();
+            joueur.ajouterPoints(scoreTotal);
+            score = joueur.getScore();
+            System.out.println("Le score de " + joueur.getNom() + " est maintenant de : " + score);
         }
+        return score;
     }
 
 }

@@ -4,7 +4,7 @@ package framework;
  * Collection de joueurs
  */
 public class CollectionJoueurs implements Collection {
-    private Joueur[] joueurs;
+    private final Joueur[] joueurs;
 
     /**
      * Connstructeur de la collection de joueur
